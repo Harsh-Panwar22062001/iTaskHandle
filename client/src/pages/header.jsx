@@ -25,7 +25,7 @@ const StyledAppBar = styled(AppBar)(({ theme, isMobile }) => ({
   borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
   zIndex: theme.zIndex.drawer + 1,
   position: "fixed",
-  width: isMobile ? "100%" : `calc(100% - 250px)`,
+  width: isMobile ? "100%" : `calc(100% - 260px)`,
   marginLeft: isMobile ? 0 : 240,
   transition: theme.transitions.create(['width', 'margin'], {
     easing: theme.transitions.easing.sharp,

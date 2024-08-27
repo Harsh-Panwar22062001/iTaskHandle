@@ -17,7 +17,8 @@ const StyledSidebar = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   borderRight: `1px solid ${theme.palette.divider}`,
   overflowY: "auto",
-  zIndex: theme.zIndex.drawer + 2, // Ensure sidebar is above the header
+  zIndex: theme.zIndex.drawer + 2, 
+  marginLeft:"10px"// Ensure sidebar is above the header
 }));
 
 const linkData = [
@@ -41,9 +42,23 @@ const linkData = [
            
       { label: "Attendance Master", link: "/attendance-master" },
       { label: "Attendance-Report", link: "/attendance-report" },
-      { label: "Daily Attendance", link: "/daily-attendance" },
-      { label: "Apply for Leave", link: "/apply-leave" },
+      { label: "Planned-Leave", link: "/planned-leave" },
+      { label: "Apply for Urgent Leave", link: "/urgent-leave" },
       { label: "Apply for WFH", link: "/apply-wfh" },
+      { label: "Leave Master", link: "/leave-master" },
+    ],
+  },
+
+  {
+    label: "Expense Management",
+    link: "#",
+    icon: <MdTaskAlt />,
+    subLinks: [
+
+           
+      { label: "Expense  master", link: "/expense-master" },
+      { label: "Add expense", link: "/add-expense" },
+  
     ],
   },
   {

@@ -1,19 +1,29 @@
 import React, { useState, Fragment, useRef } from "react";
 import { Transition } from "@headlessui/react";
 import { IoClose } from "react-icons/io5";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Routes, Route, Navigate, useLocation, Outlet } from "react-router-dom"; 
 import { Toaster } from "sonner";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-import Login from "./pages/Login";
 import TaskMaster from "./components/task/taskmaster";
 import Sidebar from "./components/Sidebar";
 import AddTask from "./components/task/AddTask";
 import UpdateTask from "./components/task/UpdateTask";
-import { TaskProvider } from './components/statemanagement/TaskContext';
 import EditTask from "./components/task/EditTask";
 import Header from './pages/header';
+import PlannedLeave from "./components/attendance/PlannedLeave";
+import UrgentLeaveForm from "./components/attendance/UrgentLeave";
+import WfhForm from "./components/attendance/WorkFromHome";
+import LeaveMaster from "./components/attendance/LeaveMaster";
+import { TaskProvider } from './components/statemanagement/TaskContext';
+import { LeaveProvider } from './components/statemanagement/LeaveContext';  // Add this line
+import AttendanceReport from "./components/attendance/AttendanceReport";
+import AttendanceMaster from "./components/attendance/AttendanceMaster";
+import { AttendanceProvider } from "./components/statemanagement/AttendanceContext";
+import AddExpense from "./components/expense/AddExpense";
+import { ExpenseProvider } from "./components/statemanagement/ExpenseContext";
+import ExpenseMaster from "./components/expense/ExpenseMaster";
 
 const theme = createTheme(); 
 
@@ -21,7 +31,6 @@ function App() {
   const { user } = useSelector((state) => state.auth);
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Sidebar is open by default
-  const dispatch = useDispatch();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -41,7 +50,7 @@ function App() {
       {/* Sidebar for Mobile */}
       <MobileSidebar isSidebarOpen={isSidebarOpen} closeSidebar={closeSidebar} />
       {/* Main Content */}
-      <div className={`flex-1 overflow-y-auto ${isSidebarOpen ? 'md:pl-772' : 'md:pl-16'}`}>
+      <div className={`flex-1 overflow-y-auto ${isSidebarOpen ? 'md:pl-52' : 'md:pl-16'}`}>
         <div className='p-4 2xl:px-10'>
           <Outlet />
         </div>
@@ -91,21 +100,39 @@ const MobileSidebar = ({ isSidebarOpen, closeSidebar }) => {
 function MainApp() {
   return (
     <ThemeProvider theme={theme}>
-      <main className="w-full min-h-screen bg-[#f3f4f6]">
-        <TaskProvider>
-          <Routes>
-            <Route path="/" element={<App />}>
-              <Route index element={<TaskMaster />} />
-              <Route path="/task-master" element={<TaskMaster />} />
-              <Route path="/add-task" element={<AddTask />} />
-              <Route path="/update-task" element={<UpdateTask />} />
-              <Route path="/edit-task" element={<EditTask />} />
-            </Route>
-            <Route path="/log-in" element={<Login />} />
-          </Routes>
-        </TaskProvider>
-        <Toaster richColors />
-      </main>
+      <TaskProvider>
+        <LeaveProvider> {/* Wrap in LeaveProvider */}
+          <AttendanceProvider>
+            <ExpenseProvider>
+            <main className="w-full min-h-screen bg-[#f3f4f6]">
+            <Routes>
+              <Route path="/" element={<App />}>
+                <Route index element={<TaskMaster />} />
+                <Route path="/task-master" element={<TaskMaster />} />
+                <Route path="/add-task" element={<AddTask />} />
+                <Route path="/update-task" element={<UpdateTask />} />
+                <Route path="/edit-task" element={<EditTask />} />
+                <Route path="/planned-leave" element={<PlannedLeave />} />
+                <Route path="/urgent-leave" element={<UrgentLeaveForm />} />
+                <Route path="/apply-wfh" element={<WfhForm />} />
+                <Route path="/leave-master" element={<LeaveMaster />} />
+                <Route path="attendance-report" element={<AttendanceReport/>} />
+                <Route path="/attendance-master" element={<AttendanceMaster/>} />
+                <Route path="/add-expense" element={<AddExpense/>} />
+                <Route path="/expense-master" element={<ExpenseMaster/>} />
+
+              </Route>
+            </Routes>
+          </main>
+
+            </ExpenseProvider>
+
+       
+          </AttendanceProvider>
+          
+        </LeaveProvider>
+      </TaskProvider>
+      <Toaster richColors />
     </ThemeProvider>
   );
 }
