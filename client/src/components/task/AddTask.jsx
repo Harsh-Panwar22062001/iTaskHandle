@@ -13,8 +13,7 @@ import {
 } from "@mui/material";
 import { useTasks } from '../../components/statemanagement/TaskContext';
 
-const alertmessage = () =>{
-
+const alertmessage = () => {
   alert("Task added successfully!");
 }
 
@@ -27,9 +26,15 @@ const AddTask = () => {
   const [assignedTo, setAssignedTo] = useState("");
   const [priority, setPriority] = useState("");
   const [points, setPoints] = useState("");
+  const [description, setDescription] = useState(""); // New description state
+  const [image, setImage] = useState(null); // New image state
 
   const projectOptions = ["Project 1", "Project 2", "Project 3"];
   const assignedToOptions = ["User 1", "User 2", "User 3"];
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,11 +46,14 @@ const AddTask = () => {
       assignedTo,
       priority,
       points,
+      description, // Include description
+      image, // Include image
       status: "Pending",
       latestRemark: "",
       latestClientRemark: "",
     };
     addTask(newTask);
+
     // Clear the form
     setTaskName("");
     setProjectName("");
@@ -54,11 +62,14 @@ const AddTask = () => {
     setAssignedTo("");
     setPriority("");
     setPoints("");
-    // You can add a success message or redirect here
+    setDescription(""); // Clear description
+    setImage(null); // Clear image
+
+    alertmessage();
   };
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm"   style={{ marginTop: '60px' }}>
       <Box
         sx={{
           padding: 4,
@@ -172,12 +183,39 @@ const AddTask = () => {
             </Grid>
 
             <Grid item xs={12}>
+              <TextField
+                fullWidth
+                label="Description"
+                variant="outlined"
+                multiline
+                rows={4}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Button
+                variant="contained"
+                component="label"
+                fullWidth
+              >
+                Upload Image
+                <input
+                  type="file"
+                  hidden
+                  onChange={handleImageChange}
+                />
+              </Button>
+            </Grid>
+
+            <Grid item xs={12}>
               <Button
                 fullWidth
                 type="submit"
                 variant="contained"
                 color="primary"
-                sx={{ mt: 2 }}  onClick = {alertmessage}
+                sx={{ mt: 2 }}
               >
                 Add Task
               </Button>

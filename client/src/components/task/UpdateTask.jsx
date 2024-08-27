@@ -29,7 +29,7 @@ const UpdateTask = () => {
 
   return (
     <Box p={3}>
-      <Typography variant="h4" gutterBottom>Update Task</Typography>
+      <Typography variant="h4" gutterBottom  style={{ marginTop: '30px' }}>Update Task</Typography>
       
       {/* Task Cards Display */}
       <Box display="flex" flexDirection="row" flexWrap="wrap" gap={2}>

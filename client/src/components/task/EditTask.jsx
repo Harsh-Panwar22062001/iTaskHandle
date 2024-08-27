@@ -47,7 +47,7 @@ const EditTask = () => {
 
   return (
     <Box p={3}>
-      <Typography variant="h4" gutterBottom>Edit Task</Typography>
+      <Typography variant="h4" gutterBottom style={{ marginTop: '30px' }}>Edit Task</Typography>
       <FormControl fullWidth>
         <InputLabel id="select-task-label">Select Task</InputLabel>
         <Select

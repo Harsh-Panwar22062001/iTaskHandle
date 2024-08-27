@@ -7,25 +7,78 @@ import {
   IconButton,
   Menu,
   MenuItem,
+  InputBase,
+  useMediaQuery,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme, alpha } from "@mui/material/styles";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import { useSelector } from "react-redux";
+import CloseIcon from "@mui/icons-material/Close";
+import MenuIcon from "@mui/icons-material/Menu";
+import SearchIcon from "@mui/icons-material/Search";
+import { useSelector, useDispatch } from "react-redux";
+import { setOpenSidebar } from "../redux/slices/authSlice"; // Ensure this path is correct
 
-const StyledAppBar = styled(AppBar)(({ theme }) => ({
+const StyledAppBar = styled(AppBar)(({ theme, isMobile }) => ({
   backgroundColor: theme.palette.background.paper,
   color: theme.palette.text.primary,
   boxShadow: "none",
   borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
-  zIndex: theme.zIndex.drawer + 1, // Ensure header is below sidebar
+  zIndex: theme.zIndex.drawer + 1,
   position: "fixed",
-  width: `calc(100% - 240px)`, // Adjust based on sidebar width
-  marginLeft: 240, // Adjust based on sidebar width
+  width: isMobile ? "100%" : `calc(100% - 250px)`,
+  marginLeft: isMobile ? 0 : 240,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
 }));
 
-const Header = () => {
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(3),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}));
+
+const Header = ({ toggleSidebar }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const { user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSidebarOpen = useSelector((state) => state.auth.openSidebar);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -35,15 +88,51 @@ const Header = () => {
     setAnchorEl(null);
   };
 
+  const handleSidebarToggle = () => {
+    dispatch(setOpenSidebar(!isSidebarOpen));
+    if (toggleSidebar) toggleSidebar();
+  };
+
   const isMenuOpen = Boolean(anchorEl);
 
   return (
-    <StyledAppBar>
+    <StyledAppBar isMobile={isMobile}>
       <Toolbar>
-        <Typography variant="h6" noWrap component="div">
-          {/* Header Content */}
-          Dashboard
-        </Typography>
+        {isMobile ? (
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={handleSidebarToggle}
+          >
+            <MenuIcon />
+          </IconButton>
+        ) : (
+          isSidebarOpen && (
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="close sidebar"
+              onClick={handleSidebarToggle}
+            >
+              <CloseIcon />
+            </IconButton>
+          )
+        )}
+
+        {/* <Typography variant="h6" noWrap component="div" sx={{ display: { xs: 'none', sm: 'block' } }}>
+          iManagement
+        </Typography> */}
+
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search…"
+            inputProps={{ 'aria-label': 'search' }}
+          />
+        </Search>
 
         <Box sx={{ flexGrow: 1 }} />
 

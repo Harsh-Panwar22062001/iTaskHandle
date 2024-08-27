@@ -35,8 +35,31 @@ const TaskMaster = () => {
           InputProps={{
             startAdornment: <FaSearch style={{ marginRight: 8 }} />,
           }}
+          sx={{
+              flex: 1,  // Adjusts the width of the search bar
+              marginLeft: "235px",
+              marginTop: "25px",
+              maxWidth: "300px",  // Optional: Set a max-width for the search bar
+    alignSelf: "center", // Adds space between the search bar and the button
+            }}
         />
-        <Button variant="contained" color="primary" href="/add-task">
+        <Button variant="contained" color="primary" href="/add-task" 
+        sx={{
+    height: "40px",   
+    width: "120px",    
+    borderRadius: "8px",  // Rounded corners
+    fontSize: "14px",     // Adjust font size
+    fontWeight: "bold",   // Make text bold
+    padding: "8px 16px",  // Adjust padding for better spacing
+    textTransform: "uppercase", // Uppercase text
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Subtle shadow for depth
+    transition: "background-color 0.3s, box-shadow 0.3s", // Smooth transitions
+    '&:hover': {
+      backgroundColor: "#0044cc",  // Darker shade for hover
+      boxShadow: "0 6px 8px rgba(0, 0, 0, 0.2)", // Enhanced shadow on hover
+    },
+    marginTop: "16px", 
+  }}  >
           Add Task
         </Button>
       </Box>

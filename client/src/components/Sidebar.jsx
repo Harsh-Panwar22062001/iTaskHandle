@@ -37,6 +37,10 @@ const linkData = [
     link: "#",
     icon: <MdTaskAlt />,
     subLinks: [
+
+           
+      { label: "Attendance Master", link: "/attendance-master" },
+      { label: "Attendance-Report", link: "/attendance-report" },
       { label: "Daily Attendance", link: "/daily-attendance" },
       { label: "Apply for Leave", link: "/apply-leave" },
       { label: "Apply for WFH", link: "/apply-wfh" },

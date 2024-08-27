@@ -1,26 +1,27 @@
-// TaskContext.js or TaskContext.jsx
 import React, { createContext, useState, useContext } from 'react';
+import { useSelector } from 'react-redux';
 
 const TaskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
   const [tasks, setTasks] = useState([]);
 
+  // Ensure that state.ui.isMobile exists
+  const isMobile = useSelector((state) => state.ui?.isMobile);
+
   const addTask = (newTask) => {
     setTasks((prevTasks) => [...prevTasks, { ...newTask, id: Date.now() }]);
   };
 
- // TaskContext.jsx
-const updateTask = (updatedTask) => {
-  console.log("Updating task:", updatedTask);
-  setTasks((prevTasks) =>
-    prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
-  );
-};
-
+  const updateTask = (updatedTask) => {
+    console.log("Updating task:", updatedTask);
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => (task.id === updatedTask.id ? updatedTask : task))
+    );
+  };
 
   return (
-    <TaskContext.Provider value={{ tasks, addTask, updateTask }}>
+    <TaskContext.Provider value={{ tasks, addTask, updateTask, isMobile }}>
       {children}
     </TaskContext.Provider>
   );
