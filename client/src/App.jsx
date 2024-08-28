@@ -1,10 +1,7 @@
-import React, { useState, Fragment, useRef } from "react";
-import { Transition } from "@headlessui/react";
-import { IoClose } from "react-icons/io5";
-import { useSelector } from "react-redux";
-import { Routes, Route, Navigate, useLocation, Outlet } from "react-router-dom"; 
-import { Toaster } from "sonner";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { Toaster } from "sonner";
 
 import TaskMaster from "./components/task/taskmaster";
 import Sidebar from "./components/Sidebar";
@@ -16,14 +13,16 @@ import PlannedLeave from "./components/attendance/PlannedLeave";
 import UrgentLeaveForm from "./components/attendance/UrgentLeave";
 import WfhForm from "./components/attendance/WorkFromHome";
 import LeaveMaster from "./components/attendance/LeaveMaster";
-import { TaskProvider } from './components/statemanagement/TaskContext';
-import { LeaveProvider } from './components/statemanagement/LeaveContext';  // Add this line
 import AttendanceReport from "./components/attendance/AttendanceReport";
 import AttendanceMaster from "./components/attendance/AttendanceMaster";
-import { AttendanceProvider } from "./components/statemanagement/AttendanceContext";
 import AddExpense from "./components/expense/AddExpense";
-import { ExpenseProvider } from "./components/statemanagement/ExpenseContext";
 import ExpenseMaster from "./components/expense/ExpenseMaster";
+import LandingPage from "./pages/LandingPage";
+
+import { TaskProvider } from './components/statemanagement/TaskContext';
+import { LeaveProvider } from './components/statemanagement/LeaveContext';
+import { AttendanceProvider } from "./components/statemanagement/AttendanceContext";
+import { ExpenseProvider } from "./components/statemanagement/ExpenseContext";
 
 const theme = createTheme(); 
 
@@ -62,7 +61,7 @@ function App() {
 }
 
 const MobileSidebar = ({ isSidebarOpen, closeSidebar }) => {
-  const mobileMenuRef = useRef(null);
+  const mobileMenuRef = useRef(null); 
 
   return (
     <Transition
@@ -101,35 +100,30 @@ function MainApp() {
   return (
     <ThemeProvider theme={theme}>
       <TaskProvider>
-        <LeaveProvider> {/* Wrap in LeaveProvider */}
+        <LeaveProvider> 
           <AttendanceProvider>
             <ExpenseProvider>
-            <main className="w-full min-h-screen bg-[#f3f4f6]">
-            <Routes>
-              <Route path="/" element={<App />}>
-                <Route index element={<TaskMaster />} />
-                <Route path="/task-master" element={<TaskMaster />} />
-                <Route path="/add-task" element={<AddTask />} />
-                <Route path="/update-task" element={<UpdateTask />} />
-                <Route path="/edit-task" element={<EditTask />} />
-                <Route path="/planned-leave" element={<PlannedLeave />} />
-                <Route path="/urgent-leave" element={<UrgentLeaveForm />} />
-                <Route path="/apply-wfh" element={<WfhForm />} />
-                <Route path="/leave-master" element={<LeaveMaster />} />
-                <Route path="attendance-report" element={<AttendanceReport/>} />
-                <Route path="/attendance-master" element={<AttendanceMaster/>} />
-                <Route path="/add-expense" element={<AddExpense/>} />
-                <Route path="/expense-master" element={<ExpenseMaster/>} />
-
-              </Route>
-            </Routes>
-          </main>
-
+              <main className="w-full min-h-screen bg-[#f3f4f6]">
+                <Routes>
+                  <Route path="/" element={<App />}>
+                    <Route index element={<LandingPage />} />
+                    <Route path="/task-master" element={<TaskMaster />} />
+                    <Route path="/add-task" element={<AddTask />} />
+                    <Route path="/update-task" element={<UpdateTask />} />
+                    <Route path="/edit-task" element={<EditTask />} />
+                    <Route path="/planned-leave" element={<PlannedLeave />} />
+                    <Route path="/urgent-leave" element={<UrgentLeaveForm />} />
+                    <Route path="/apply-wfh" element={<WfhForm />} />
+                    <Route path="/leave-master" element={<LeaveMaster />} />
+                    <Route path="/attendance-report" element={<AttendanceReport />} />
+                    <Route path="/attendance-master" element={<AttendanceMaster />} />
+                    <Route path="/add-expense" element={<AddExpense />} />
+                    <Route path="/expense-master" element={<ExpenseMaster />} />
+                  </Route>
+                </Routes>
+              </main>
             </ExpenseProvider>
-
-       
           </AttendanceProvider>
-          
         </LeaveProvider>
       </TaskProvider>
       <Toaster richColors />

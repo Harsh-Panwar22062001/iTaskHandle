@@ -9,7 +9,7 @@ import { setOpenSidebar } from "../redux/slices/authSlice";
 import clsx from "clsx";
 
 const StyledSidebar = styled(Box)(({ theme }) => ({
-  width: 250, // Adjust the width as per your design
+  width: 250, 
   height: "100vh",
   position: "fixed",
   top: 0,
@@ -18,7 +18,7 @@ const StyledSidebar = styled(Box)(({ theme }) => ({
   borderRight: `1px solid ${theme.palette.divider}`,
   overflowY: "auto",
   zIndex: theme.zIndex.drawer + 2, 
-  marginLeft:"10px"// Ensure sidebar is above the header
+  marginLeft:"10px"
 }));
 
 const linkData = [

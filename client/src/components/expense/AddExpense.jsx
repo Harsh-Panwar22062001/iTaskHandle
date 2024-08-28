@@ -90,11 +90,25 @@ const AddExpense = () => {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newExpense = { name, toSchool, fromSchool, selectedDate, time };
-    addExpense(newExpense); // Store the new expense in context
-    // Optionally reset form fields here
+    const newExpense = { 
+      name, 
+      toSchool, 
+      fromSchool, 
+      selectedDate, 
+      time,
+      amount: parseFloat(amount) // Include the amount and parse it to a number
+    };
+    addExpense(newExpense);
+    // Reset form fields
+    setName("");
+    setToSchool("");
+    setFromSchool("");
+    setSelectedDate(null);
+    setTime(null);
+    setAmount("");
   };
 
+  
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Container maxWidth="md">
@@ -120,13 +134,15 @@ const AddExpense = () => {
               </Select>
             </FormControl>
 
+          
+
             <FormControl fullWidth margin="normal">
-              <InputLabel id="to-select-label">To</InputLabel>
+              <InputLabel id="from-select-label">From</InputLabel>
               <Select
-                labelId="to-select-label"
-                value={toSchool}
-                onChange={(e) => setToSchool(e.target.value)}
-                label="To"
+                labelId="from-select-label"
+                value={fromSchool}
+                onChange={(e) => setFromSchool(e.target.value)}
+                label="From"
               >
                 {schools.map((school) => (
                   <MenuItem key={school} value={school}>
@@ -136,13 +152,15 @@ const AddExpense = () => {
               </Select>
             </FormControl>
 
+
+
             <FormControl fullWidth margin="normal">
-              <InputLabel id="from-select-label">From</InputLabel>
+              <InputLabel id="to-select-label">To</InputLabel>
               <Select
-                labelId="from-select-label"
-                value={fromSchool}
-                onChange={(e) => setFromSchool(e.target.value)}
-                label="From"
+                labelId="to-select-label"
+                value={toSchool}
+                onChange={(e) => setToSchool(e.target.value)}
+                label="To"
               >
                 {schools.map((school) => (
                   <MenuItem key={school} value={school}>
