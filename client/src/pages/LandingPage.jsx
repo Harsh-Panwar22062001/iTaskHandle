@@ -1,41 +1,53 @@
-// src/pages/LandingPage.jsx
-import React from 'react';
-import { Container, Typography, Box, TextField } from '@mui/material';
-import { DatePicker } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+// import React, { useState } from 'react';
+// import { Container, Typography, Box, TextField, Button } from '@mui/material';
 
-const LandingPage = () => {
-  const [selectedDate, setSelectedDate] = React.useState(null);
+// const LandingPage = () => {
+//   const [selectedDate, setSelectedDate] = useState('');
 
-  return (
-    <Container maxWidth="md" sx={{ textAlign: 'center', py: 4 }}>
-      <Typography variant="h2" gutterBottom>
-        Welcome to iTask Management
-      </Typography>
-      <Typography variant="h6" paragraph>
-        Here are some inspiring thoughts to get you started:
-      </Typography>
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h6" gutterBottom>
-          "Success is not final, failure is not fatal: It is the courage to continue that counts."
-        </Typography>
-        <Typography variant="h6">
-          "The only limit to our realization of tomorrow is our doubts of today."
-        </Typography>
-      </Box>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <DatePicker
-          value={selectedDate}
-          onChange={(newValue) => setSelectedDate(newValue)}
-          renderInput={(params) => <TextField {...params} />}
-          label="Select Date"
-          disableFuture
-          sx={{ maxWidth: 300, mx: 'auto' }}
-        />
-      </LocalizationProvider>
-    </Container>
-  );
-};
+//   const handleDateChange = (event) => {
+//     setSelectedDate(event.target.value);
+//   };
 
-export default LandingPage;
+//   const formatDate = (dateString) => {
+//     if (!dateString) return '';
+//     const date = new Date(dateString);
+//     return date.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+//   };
+
+//   return (
+//     <Container maxWidth="md" sx={{ textAlign: 'center', py: 4 }}>
+//       <Typography variant="h2" gutterBottom>
+//         Welcome to iTask Management
+//       </Typography>
+//       <Typography variant="h6" paragraph>
+//         Here are some inspiring thoughts to get you started:
+//       </Typography>
+//       <Box sx={{ my: 4 }}>
+//         <Typography variant="h6" gutterBottom>
+//           "Success is not final, failure is not fatal: It is the courage to continue that counts."
+//         </Typography>
+//         <Typography variant="h6">
+//           "The only limit to our realization of tomorrow is our doubts of today."
+//         </Typography>
+//       </Box>
+//       <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+//         <TextField
+//           type="date"
+//           value={selectedDate}
+//           onChange={handleDateChange}
+//           label="Select Date"
+//           InputLabelProps={{ shrink: true }}
+//           inputProps={{ max: new Date().toISOString().split('T')[0] }}
+//           sx={{ width: 220 }}
+//         />
+//         {selectedDate && (
+//           <Typography variant="body1">
+//             Selected date: {formatDate(selectedDate)}
+//           </Typography>
+//         )}
+//       </Box>
+//     </Container>
+//   );
+// };
+
+// export default LandingPage;
