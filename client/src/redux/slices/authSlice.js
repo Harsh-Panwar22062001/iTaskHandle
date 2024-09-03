@@ -6,7 +6,7 @@ const initialState = {
     ? JSON.parse(localStorage.getItem("userInfo"))
     : user,
 
-  isSidebarOpen: false,
+    isSidebarOpen: true,
 };
 
 const authSlice = createSlice({

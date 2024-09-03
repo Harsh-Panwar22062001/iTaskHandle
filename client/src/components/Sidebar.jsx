@@ -1,15 +1,14 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { MdOutlineAddTask, MdTaskAlt } from "react-icons/md";
-import { Box, IconButton } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setOpenSidebar } from "../redux/slices/authSlice";
 import clsx from "clsx";
+import { Box, IconButton } from "@mui/material";
 
 const StyledSidebar = styled(Box)(({ theme }) => ({
-  width: 250, 
+  width: 250,
   height: "100vh",
   position: "fixed",
   top: 0,
@@ -17,8 +16,8 @@ const StyledSidebar = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
   borderRight: `1px solid ${theme.palette.divider}`,
   overflowY: "auto",
-  zIndex: theme.zIndex.drawer + 2, 
-  marginLeft:"10px"
+  zIndex: theme.zIndex.drawer + 2,
+  marginLeft: "10px",
 }));
 
 const linkData = [
@@ -38,8 +37,6 @@ const linkData = [
     link: "#",
     icon: <MdTaskAlt />,
     subLinks: [
-
-           
       { label: "Attendance Master", link: "/attendance-master" },
       { label: "Attendance-Report", link: "/attendance-report" },
       { label: "Planned-Leave", link: "/planned-leave" },
@@ -48,17 +45,13 @@ const linkData = [
       { label: "Leave Master", link: "/leave-master" },
     ],
   },
-
   {
     label: "Expense Management",
     link: "#",
     icon: <MdTaskAlt />,
     subLinks: [
-
-           
-      { label: "Expense  master", link: "/expense-master" },
+      { label: "Expense master", link: "/expense-master" },
       { label: "Add expense", link: "/add-expense" },
-  
     ],
   },
   {
@@ -68,8 +61,8 @@ const linkData = [
   },
 ];
 
-const Sidebar = () => {
-  const { user } = useSelector((state) => state.auth);
+const Sidebar = ({ toggleSidebar, user }) => {
+  const isSidebarOpen = useSelector((state) => state.auth.isSidebarOpen);
   const [openSubMenu, setOpenSubMenu] = useState(null);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -121,7 +114,7 @@ const Sidebar = () => {
   };
 
   return (
-    <StyledSidebar>
+    <StyledSidebar className={`sidebar-container ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
       <div className="flex justify-between items-center p-4">
         <h1 className="flex gap-1 items-center">
           <p className="bg-blue-600 p-2 rounded-full">
@@ -129,7 +122,7 @@ const Sidebar = () => {
           </p>
           <span className="text-2xl font-bold text-black">iManagement</span>
         </h1>
-        <IconButton onClick={closeSidebar} edge="end" color="inherit">
+        <IconButton aria-label="open sidebar" onClick={toggleSidebar}>
           <CloseIcon />
         </IconButton>
       </div>
